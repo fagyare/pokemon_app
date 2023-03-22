@@ -11,6 +11,7 @@ function Index(props) {
                  
                 <li key={index}>
                         <a href={`/pokemons/${pokemon._id || pokemon.id}`}><strong>{pokemon.name}</strong></a>
+
                 </li>
                 )}
             </ul>

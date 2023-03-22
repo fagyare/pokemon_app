@@ -71,8 +71,8 @@ module.exports.update = async (req, res ) => {
     try {
     // pass the id (req.params.id) to find the document in the db & the form data (req.body) to update it
     await Pokemon.findByIdAndUpdate(req.params.id, req.body) // id to find pokemon and req.body is
-    let index = pokemons.findIndex((item) => item.name === req.params.name)
-    pokemons[index] = req.body
+    // let index = pokemons.findIndex((item) => item.name === req.params.name)
+    // pokemons[index] = req.body
     res.redirect(`/pokemon/${req.params.id}`)
     } catch(err) {
         res.send(err.message)
