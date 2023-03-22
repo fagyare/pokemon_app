@@ -4,7 +4,6 @@ import DefaultLayout from '../layouts/DefaultLayout';
 
 function Show(props) {
 
- console.log(props)
     return (
       <DefaultLayout title='Show View'>
         <div className='show-view'>
@@ -19,7 +18,7 @@ function Show(props) {
         <br /><br />
 
 
-        <form action={`/pokemon/${props.pokemon.img}?_method=DELETE`} method="POST">
+        <form action={`/pokemons/${props.pokemon.img}?_method=DELETE`} method="POST">
             <button>Delete</button>
         </form>
 

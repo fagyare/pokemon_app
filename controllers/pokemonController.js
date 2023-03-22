@@ -1,7 +1,7 @@
-const pokemons = require('../models/pokemon')
+const pokemons = require('../models/pokemons')
 
 // import pokemon model 
-const Pokemon = require('../models/PokemonModel')
+const Pokemon = require('../models/PokemonsModels')
 
 // index function: The callback func originally from "app.get('/', () =>{})"
 module.exports.index = async(req, res) => {
@@ -14,11 +14,14 @@ module.exports.index = async(req, res) => {
 // Show function // index function: The callback func originally from "app.get('/:index', () =>{})"
 // They now have names: "index" and "show"
 module.exports.show = async (req, res) =>  {
-    console.log(req.params.index)
-    // const pokemon = await Pokemon.findById(req.params.id)
-    console.log(pokemons)
-    console.log(pokemons[req.params.id], 'test')
-    res.render('pokemons/Show', { pokemon: pokemons[req.params.id]})
+    try {
+        const pokemon = await Pokemon.findById(req.params.id);
+        res.render('pokemons/Show', { pokemon });
+   } catch (err) {
+        res.render(err);
+    }
+    // console.log(pokemons)
+    // console.log(pokemons[req.params.id], 'test')
 
 }
 
@@ -34,13 +37,12 @@ module.exports.create = async (req, res) => {
    
     try {
     const  result = await Pokemon.create(req.body)
-        console.log(result)
     } catch(err) {
         console.log('error is', err)
     }    
 
     // pokemons.push(req.body)
-    res.redirect('/pokemon')
+    res.redirect('/pokemons')
 }
 
 // DELETE /pokemons/:name
@@ -50,14 +52,13 @@ module.exports.delete = async (req, res) => {
    await Pokemon.findByIdAndDelete(req.params.id)    
     res.redirect('/pokemons')
     } catch(err) {
-    console.log(err.message)
     }
 }
 
 // GET /pokemons/:name/edit  changed to GET /pokemons/:id/edit 
 module.exports.edit = async (req, res ) => {
     // console.log('GET /pokemons/:id/edit')
-    // let index = pokemons.findIndex((item) => item.name === req.params.name)
+    let index = pokemons.findIndex((item) => item.name === req.params.name)
    const pokemon = await Pokemon.findById(req.params.id)
     res.render('pokemons/Edit', {pokemon})
 }
@@ -65,16 +66,15 @@ module.exports.edit = async (req, res ) => {
 //PUT / pokemons/:name  changed to PUT / pokemons/:id
 module.exports.update = async (req, res ) => {
     // console.log('PUT / pokemons/:id')
-    console.log(req.body)
+    // console.log(req.body)
     
     try {
     // pass the id (req.params.id) to find the document in the db & the form data (req.body) to update it
     await Pokemon.findByIdAndUpdate(req.params.id, req.body) // id to find pokemon and req.body is
-    // let index = pokemons.findIndex((item) => item.name === req.params.name)
-    // pokemons[index] = req.body
+    let index = pokemons.findIndex((item) => item.name === req.params.name)
+    pokemons[index] = req.body
     res.redirect(`/pokemon/${req.params.id}`)
     } catch(err) {
-        console.log(err)
         res.send(err.message)
     }
 
@@ -88,7 +88,6 @@ try {
     Pokemon.create(pokemons) // create a new seed using initial pokemons array
     res.redirect('/pokemons')
 } catch(err) {
-    console.log(err)
     res.send(err.message)
  }
 
@@ -102,7 +101,6 @@ module.exports.clear = async (req, res) => {
         await Pokemon.deleteMany({})
         res.redirect('/pokemons')
     } catch(err) {
-        console.log(err)
         res.send(err.message)
     }
 }

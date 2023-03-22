@@ -1,6 +1,5 @@
 // Require dotenv to setup environment variables in our server
 require('dotenv').config()
-
 // Load express
 const express = require('express')
 
@@ -45,13 +44,14 @@ app.use(express.static('public'))
 
 // Create a custom middleware for loggin the HTTP Method & path 
 app.use((req, res, next) => {
-    console.log('inside middleware')
-    console.log(`${req.method} ${req.path}`) // POST /pokemons
+    //console.log('inside middleware')
+    //console.log(`${req.method} ${req.path}`) // POST /pokemons
+    //console.log(req.body);
     next()
 })
 
 //Connect our Routes to our express app 
-app.use('/pokemon', pokemonRoutes) 
+app.use('/pokemons', pokemonRoutes) 
 
 
 

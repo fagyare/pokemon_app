@@ -4,7 +4,7 @@ function New() {
   return (
     <div>
             <h1>New Pokemon</h1>
-            <form action="/pokemon" method="POST">
+            <form action="/pokemons" method="POST">
                 <label htmlFor="nme">Pokemon:</label><br />
                 <input type="text" id="nme" name="name" /><br /><br />
 

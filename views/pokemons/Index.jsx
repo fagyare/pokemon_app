@@ -10,12 +10,11 @@ function Index(props) {
                 {props.pokemons.map((pokemon, index) => 
                  
                 <li key={index}>
-                        <a href={`/pokemon/${index}`}><strong>{pokemon.name}</strong></a>
-                   
+                        <a href={`/pokemons/${pokemon._id || pokemon.id}`}><strong>{pokemon.name}</strong></a>
                 </li>
                 )}
             </ul>
-            <a href="/pokemon/new">Add a pokemon</a>
+            <a href="/pokemons/new">Add a pokemon</a>
 
             <br></br>    <br></br> 
 
